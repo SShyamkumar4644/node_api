@@ -1,0 +1,205 @@
+1. Create a node-api file or anything and write npm init
+2. Click enter and till end
+3. In package.json file you find index.js file in main, create index.js file
+4. File created and to run that in package.json in scripts put "start": "node index.js" and after that npm run start
+and you get > api@1.0.0 start
+> node index.js
+
+Server started on port 3000
+
+4. After that
+
+app.get('/', (req, res)=> {
+    res.send('Hello');
+})
+
+app.get('/users', (req, res)=> {
+    res.send('Hello from users');
+})
+
+app.get('/contacts', (req, res)=> {
+    res.send('Hello from contacts');
+})
+
+and npm run start, and to ctrl+c to stop sever
+
+5. install nodemon npm install, and in package.json file, edit nodemon index.js and then npm run start
+nodemon is for refreshed everytime you edit
+
+6. install thunder client you will get new request and in url select post and type your url
+http://localhost:3000/quotes and select body type 
+
+{
+  "id": 1,
+  "title": "My first quote"
+}
+and click send you will get in repsonse below
+{
+  "message": "Quote added"
+}
+
+now new request again, copy url http://localhost:3000/quotes and send, you will get quotes as response
+
+
+MongoDB:
+Signup and you will get default page, create enter username, password, add ip address and create cluster.
+connect, create application click on it, and you will get Add your connection string into your application code tick mark that you will get big code.
+mongoose connects mongodb to nodejs.npm install mongoose, after that npm start run nodejs and after mongoose install, create connection.js file, untick the mark copy the small code copy paste in 
+connection.js file
+
+useNewUrlParser: true, useUnifiedTopology: true, copy from tick mark of the password from atlas passowrd and paste inside the bracket
+
+Copy paste the code and add require in index.js, you must get mongodb connection succeeded.
+If not you might have error in ip address, click on network access click on edit on ip address, allow access on anywhere and restart the Server
+
+then create folder called models, then create Student.js S capital, models is schema of what data we are going to store.
+in schema of student .js we didnt have id, cause mongodb autogenerates id so no need, now go to index.js  and 
+
+const express = require('express');// module which imports all the features of the express module.
+
+const app = express(); // assigning this express module to app variable to carry on forward functions
+
+app.use(express.json()); // store the values in json format
+
+require('./connection');
+
+app.listen(3000, () =>{
+    console.log('Server started on port 3000');
+})
+//let the code be this much
+
+app.post("/student", async (req, res) =>{
+    try{
+        const student = new Student(req.body);
+        const createStudent= await student.save();
+        res.status(201).send(createStudent); // this will save mongodb atlas, status successful
+    } catch(e){
+        res.status(400).send(e); // here you might get error
+    }
+    
+}) put this code and check collections you will get test student database displayed
+Now thunderclient, new request http://localhost:3000/student POST, Click on body
+type:
+{
+ "name":"Shyam",
+ "usn":"4SF18CS148",
+ "branch":"CS",
+ "phone":"6362406283",
+ "sem":"8",
+ "email":"shyamng48@gmail.com"
+}
+and send you will get back same data and refresh on mongodb website you will get the same
+
+Now get all student data
+
+app.get("/student", async (req, res) =>{
+    try{
+        const students= await student.find();
+        res.send(students); // this will save mongodb atlas, status successful
+    } catch(e){
+        res.status(400).send(e); // here you might get error
+    }
+    
+})
+
+Now new request, http://localhost:3000/student copy paste link and GET condition, send and you will get the data
+
+You can alter the request to add new data, no need new request, send and get you will get 
+
+Response
+[
+  {
+    "_id": "63007e2bbb873b4906560f74",
+    "name": "Shyam",
+    "usn": "4SF18CS148",
+    "branch": "CS",
+    "sem": "8",
+    "email": "shyamng48@gmail.com",
+    "phone": "6362406283",
+    "__v": 0
+  },
+  {
+    "_id": "6300871091d6c7a1af725147",
+    "name": "Sujith",
+    "usn": "4SF18CS160",
+    "branch": "CS",
+    "sem": "8",
+    "email": "sujith@gmail.com",
+    "phone": "6362406283",
+    "__v": 0
+  }
+]
+
+copy id 6300871091d6c7a1af725147, new request, copy localhost link and http://localhost:3000/student/6300871091d6c7a1af725147 and send you will get the data of that id
+
+If you have any error, put console.log in catch section and the error will be displayed and correct it
+
+Update:
+//update
+app.put("/student/:id", async (req, res) =>{
+    try{
+        const _id =req.params.id;
+        const student = await Student.findByIdAndUpdate(_id, req.body, {
+            new:true,
+        });
+        res.send(student);
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
+
+new request, put link of localhost, put id in link
+http://localhost:3000/student/63007e2bbb873b4906560f74 and 
+
+{
+  "email":"sujith343434@gmail.com"
+}
+put request and send, you will get
+{
+  "_id": "63007e2bbb873b4906560f74",
+  "name": "Shyam",
+  "usn": "4SF18CS148",
+  "branch": "CS",
+  "sem": "8",
+  "email": "sujith343434@gmail.com",
+  "phone": "6362406283",
+  "__v": 0
+}
+
+Delete:
+
+//delete
+app.delete("/student/:id", async (req, res) =>{
+    try{
+        const _id =req.params.id;
+        const student = await Student.findByIdAndDelete(_id);
+        if(!student){
+            return res.status(404).send();
+        }
+        else{
+            res.send(student);
+        }
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
+
+New request and http://localhost:3000/student/63007e2bbb873b4906560f74 choose delete and deleted
+
+{
+  "_id": "63007e2bbb873b4906560f74",
+  "name": "Shyam",
+  "usn": "4SF18CS148",
+  "branch": "CS",
+  "sem": "8",
+  "email": "sujith343434@gmail.com",
+  "phone": "6362406283",
+  "__v": 0
+} and check in mongodb atlas website and refresh it if deleted
+
+
+
