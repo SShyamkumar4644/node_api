@@ -1,13 +1,30 @@
-1. Create a node-api file or anything and write npm init
-2. Click enter and till end
-3. In package.json file you find index.js file in main, create index.js file
-4. File created and to run that in package.json in scripts put "start": "node index.js" and after that npm run start
-and you get > api@1.0.0 start
+STEPS FOR CREATING NODE-API:
+Step 1:
+1. Create a node-api folder or anything and write npm init in terminal to initialise
+
+Step 2:
+2. You will get options to enter values on terminal, no need to put anything, Click enter till the end
+
+Step 3:
+3. In package.json file you wil find index.js file in main, that means you have to create index.js file.
+
+Step 4:
+4. After index.js file is created, in order to execute/run that file, in package.json file we need to mention in scripts part "start": "node index.js" and 
+after that in terminal under that folder execute, npm run start and enter.
+and you will the get output as below:
+ 
+> api@1.0.0 start
 > node index.js
 
 Server started on port 3000
 
-4. After that
+Step 5:
+5. In index.js file put these lines of code in that file:
+const express = require('express');// module which imports all the features of the express module.
+
+const app = express(); // assigning this express module to app variable to carry on forward functions
+
+app.use(express.json()); // store the values in json format
 
 app.get('/', (req, res)=> {
     res.send('Hello');
@@ -21,39 +38,86 @@ app.get('/contacts', (req, res)=> {
     res.send('Hello from contacts');
 })
 
-and npm run start, and to ctrl+c to stop sever
+app.listen(3000, () =>{
+    console.log('Server started on port 3000');
+})
 
-5. install nodemon npm install, and in package.json file, edit nodemon index.js and then npm run start
-nodemon is for refreshed everytime you edit
+These codes above here are to execute on brwoser that is http://localhost:3000/ copy this link and paste on browser,
+you will get respective outputs
+when you give http://localhost:3000/
+you will get output as: Hello
 
-6. install thunder client you will get new request and in url select post and type your url
+when you give http://localhost:3000/users
+you will get output as: Hello from contacts
+
+when you give http://localhost:3000/contacts
+you will get output as: Hello from contacts
+
+and then for these to execute npm run start, and to ctrl+c to stop sever
+
+But here,if any changes done in between, you have stop the server and restart the server again
+and again, to overcome this, you need to install nodemon, by in terminal npm install nodemon
+
+Step 6:
+6. install nodemon by npm install nodemon, and in package.json file check whether the package is installed
+ "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19" // nodemon installed
+  }
+you will get like this in dependencies of package.json file and after that
+edit nodemon index.js
+"scripts": {
+    "start": "nodemon index.js",
+in scripts tag and then npm run start on terminal to execute.
+nodemon is for refreshed everytime you edit.
+
+Step 7:
+7. Install thunder client in vscode extensions, you will have new request option in blue color, click on that, new page for
+new request appears and in url dropdown select post and type your url
 http://localhost:3000/quotes and select body type 
 
 {
   "id": 1,
   "title": "My first quote"
 }
-and click send you will get in repsonse below
+and click send you will get in response below
 {
   "message": "Quote added"
 }
 
-now new request again, copy url http://localhost:3000/quotes and send, you will get quotes as response
+Step 8:
+8. Now new request again, copy url http://localhost:3000/quotes and send, you will get back the quotes as what you have given as input at first,
+you will get quotes as response
 
-
-MongoDB:
+Step 9:
+9. MongoDB:
 Signup and you will get default page, create enter username, password, add ip address and create cluster.
-connect, create application click on it, and you will get Add your connection string into your application code tick mark that you will get big code.
-mongoose connects mongodb to nodejs.npm install mongoose, after that npm start run nodejs and after mongoose install, create connection.js file, untick the mark copy the small code copy paste in 
-connection.js file
+Click on connect, create application click on it second option, and you will get Add your connection string into your application code tick mark that you will get big code.
+
+Step 10:
+10. Mongoose connects mongodb to nodejs. Install mongoose by npm install mongoose, after that npm start run nodejs and after mongoose install, create a connection.js file, untick the mark copy the small code copy paste in 
+from mongodb atlas website, and paste it in connection.js file.
 
 useNewUrlParser: true, useUnifiedTopology: true, copy from tick mark of the password from atlas passowrd and paste inside the bracket
 
-Copy paste the code and add require in index.js, you must get mongodb connection succeeded.
+Copy paste the code:
+app.use(express.json()); // store the values in json format
+
+require('./connection');
+
+const Student = require('./models/Student');// import student schema 
+and add require in index.js, you must get mongodb connection succeeded.
 If not you might have error in ip address, click on network access click on edit on ip address, allow access on anywhere and restart the Server
 
-then create folder called models, then create Student.js S capital, models is schema of what data we are going to store.
-in schema of student .js we didnt have id, cause mongodb autogenerates id so no need, now go to index.js  and 
+Step 11:
+11. Now create a folder called models, then create Student.js where is S capital, models is schema of what data we are going to store in database.
+Here in schema of Student.js we didnt have id, because mongodb autogenerates id so no need worry about it, now go to index.js  
+
+and 
+erase all the codes and let the below codes be there:
 
 const express = require('express');// module which imports all the features of the express module.
 
@@ -68,6 +132,8 @@ app.listen(3000, () =>{
 })
 //let the code be this much
 
+And paste this code in between require and app.listen section:
+//Get back data what was given as input
 app.post("/student", async (req, res) =>{
     try{
         const student = new Student(req.body);
@@ -77,8 +143,10 @@ app.post("/student", async (req, res) =>{
         res.status(400).send(e); // here you might get error
     }
     
-}) put this code and check collections you will get test student database displayed
-Now thunderclient, new request http://localhost:3000/student POST, Click on body
+}) 
+Put this code and check collections in Mongodb atlas website, you will get test student database displayed.
+
+Now go to thunderclient, select new request, copypaste http://localhost:3000/student , select POST option from dropdown, Click on body and
 type:
 {
  "name":"Shyam",
@@ -88,9 +156,11 @@ type:
  "sem":"8",
  "email":"shyamng48@gmail.com"
 }
-and send you will get back same data and refresh on mongodb website you will get the same
+and click on send, you will get back same data which was entered and refresh mongodb website you will get the same the data displayed hwich you entered through thunderclient.
 
-Now get all student data
+Step 12:
+12. Now to get all the student data which was entered.
+Put this code in index.js file
 
 app.get("/student", async (req, res) =>{
     try{
@@ -102,9 +172,9 @@ app.get("/student", async (req, res) =>{
     
 })
 
-Now new request, http://localhost:3000/student copy paste link and GET condition, send and you will get the data
+Now click onnew request, copypaste this link http://localhost:3000/student and select GET condition from dropdown, send and you will get the data
 
-You can alter the request to add new data, no need new request, send and get you will get 
+You can alter the request to add new data from same new request, no need new request, send and get you will get response as:
 
 Response
 [
@@ -129,6 +199,24 @@ Response
     "__v": 0
   }
 ]
+
+//display
+app.get("/student/:id", async (req, res) =>{
+    try{
+        const _id=req.params.id;
+        const student = await Student.findById(_id);
+        if(!student){
+            return res.status(404).send();
+        }
+        else{
+            res.send(student);
+        }
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
 
 copy id 6300871091d6c7a1af725147, new request, copy localhost link and http://localhost:3000/student/6300871091d6c7a1af725147 and send you will get the data of that id
 
@@ -188,7 +276,7 @@ app.delete("/student/:id", async (req, res) =>{
     
 })// get all student data whatever that is stored in database
 
-New request and http://localhost:3000/student/63007e2bbb873b4906560f74 choose delete and deleted
+New request and http://localhost:3000/student/63007e2bbb873b4906560f74 choose delete from dropdown and deleted
 
 {
   "_id": "63007e2bbb873b4906560f74",
