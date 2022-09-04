@@ -1,0 +1,36 @@
+Now we have created form.js component, we use to create new student using by sending request 
+from thunderclient or postman,
+now we have to do it by frontend that will be done by asynchronous js request/ajax, requsets 
+send from thundercleint that can be sent by ajax
+we can do it by the package called axios that can be done by axois package,
+a replacemnt for thunderclient, using axios to make requests, 
+frontend form captures inputs, take it individually with state managment
+
+const [name,setName] = useState("");
+name is state variable that captures the name and function that updates the name whenever it chnages,  
+and inside usestate that is initial state of that variable.
+whenver the value of the input changes, we need to update it wrt its function to get latest value of the field, 
+we do that by onChange event, that calls setName function that updates with
+latest variable.
+
+when you click you submit button, you are submmiting the form, you have inbuilt property, onSubmit 
+function thta is bound to form tag itself, when onSubmiyt function calls,
+we are calling our own method handleSubmit, this will triggers performs submit action. handleSubmit 
+is an event that is because when you click on submit button,each button will have own action to
+be performed, to prevent that we use it, preventdefault will prevent refreshing the page
+
+When you submit form, we need to send the data to backend, which we were doing in thunderclient, we create object
+called as data, make sure the key is same as model in node-api file. the object we created must be send to backend,
+backend will update in our database.
+
+post request accepts two paramertes one is  url and data that we want to store
+
+Since this is backend call, we never kno when we will get the response, that is the reason we are 
+waiting for it, by making that function as asynchrono0us
+whenver your making backend api call, entire fucntion should handle the promise. we are putting 
+this try catch block in form.js file and will store
+data in mongodb. But when you make request from frontend to backend, we might get error called as 
+CORS, we use cors package in node-api use it.
+CORS POLICY ERROR, WHY?CAUSE REQUEST FROM REQUEST FROM SAME HOST NOT ALLOWED BY BROWSER POLICY SO
+
+JS Promises
