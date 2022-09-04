@@ -1,0 +1,52 @@
+In thunderclient, you have given a post request to mongodb to
+store the the data and write the data in order to store it,
+http://localhost:3000/student post
+{
+ "name":"Shyam",
+ "usn":"4SF18CS148",
+ "branch":"CS",
+ "phone":"6362406283",
+ "sem":"8",
+ "email":"shyamng48@gmail.com"
+}
+and click on send, you will get back same data which was entered and refresh mongodb website you will get the same the data displayed hwich you entered through thunderclient.
+
+Step 12:
+12. Now to get all the student data which was entered.
+Put this code in index.js file get method
+
+app.get("/student", async (req, res) =>{
+    try{
+        const students= await student.find();
+        res.send(students); // this will save mongodb atlas, status successful
+    } catch(e){
+        res.status(400).send(e); // here you might get error
+    }
+    
+})
+
+Response
+[
+  {
+    "_id": "63007e2bbb873b4906560f74",
+    "name": "Shyam",
+    "usn": "4SF18CS148",
+    "branch": "CS",
+    "sem": "8",
+    "email": "shyamng48@gmail.com",
+    "phone": "6362406283",
+    "__v": 0
+  },
+  {
+    "_id": "6300871091d6c7a1af725147",
+    "name": "Sujith",
+    "usn": "4SF18CS160",
+    "branch": "CS",
+    "sem": "8",
+    "email": "sujith@gmail.com",
+    "phone": "6362406283",
+    "__v": 0
+  }
+]
+If error check spelliong mistakes by console.log(e);
+

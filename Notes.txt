@@ -9,7 +9,8 @@ Step 3:
 3. In package.json file you wil find index.js file in main, that means you have to create index.js file.
 
 Step 4:
-4. After index.js file is created, in order to execute/run that file, in package.json file we need to mention in scripts part "start": "node index.js" and 
+4. After index.js file is created, in order to execute/run that file, in package.json file we need to mention in scripts part 
+"start": "node index.js" and 
 after that in terminal under that folder execute, npm run start and enter.
 and you will the get output as below:
  
@@ -19,6 +20,18 @@ and you will the get output as below:
 Server started on port 3000
 
 Step 5:
+put codes 
+const express = require('express');
+
+const app = express(); // assigning this express module to app variable to carry on forward functions
+
+app.use(express.json());
+
+app.listen(3000, () =>{
+    console.log('Server started on port 3000');
+})
+and install express and run you will server started on port 3000
+
 5. In index.js file put these lines of code in that file:
 const express = require('express');// module which imports all the features of the express module.
 
@@ -87,6 +100,20 @@ and click send you will get in response below
 {
   "message": "Quote added"
 }
+//for these to work put these codes in index.js
+
+quotes=['This is a nice quote'];//initialise
+
+app.post('/quotes', (req,res) => { 
+    const quote = req.body;
+    quotes.push(quote);
+    res.send({ message: "Quote added"});
+})//this is post method to post msg
+
+app.get('/quotes', (req, res)=> {
+    res.send(quotes);
+})//get method to see if the msg we sent is correct or not must get back same msg
+
 
 Step 8:
 8. Now new request again, copy url http://localhost:3000/quotes and send, you will get back the quotes as what you have given as input at first,
@@ -116,6 +143,8 @@ Step 11:
 11. Now create a folder called models, then create Student.js where is S capital, models is schema of what data we are going to store in database.
 Here in schema of Student.js we didnt have id, because mongodb autogenerates id so no need worry about it, now go to index.js  
 
+
+student.js fiul
 and 
 erase all the codes and let the below codes be there:
 
@@ -200,6 +229,8 @@ Response
   }
 ]
 
+you have got two data entered and have two diff id's, now to get one of thier data id, put
+this display function and copy the id of anyone data and follow below steps
 //display
 app.get("/student/:id", async (req, res) =>{
     try{
@@ -289,5 +320,52 @@ New request and http://localhost:3000/student/63007e2bbb873b4906560f74 choose de
   "__v": 0
 } and check in mongodb atlas website and refresh it if deleted
 
+Frontend:
+1. Create form and studentslists.js file, rfce add them in navbar links
+<Link to="/list">All students</Link>
+<Link to="/create">Add new student</Link>
 
+now add style in navbar.css 
+.navbar{
+    float:right;
+}
 
+a{
+    margin-right:10px;
+}
+
+and also in app.js 
+remove other links and paste these two
+<Route path="/" element={<Form />} />
+<Route path="/list" element={<StudentsList/>} />
+
+Copy paste style.css and form.js codes sent you and paste and run
+add import also
+
+const [name, setName] =useState("");
+  const [usn, setUsn] =useState("");
+  const [branch, setBranch] =useState("");
+  const [email, setEmail] =useState("");
+  const [sem, setSem] =useState("");
+  const [phone, setPhone] =useState("");
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+  
+  const data={
+    name:name,
+    usn:usn,
+    branch:branch,
+    email:email,
+    sem:sem,
+    phone:phone,
+  };
+  console.log(data);
+};
+
+in form.js file
+
+give inputs in form click submit and console inspect element you will get data displayed in console when 
+you submit
+
+npm install axios

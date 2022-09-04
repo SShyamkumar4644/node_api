@@ -8,6 +8,7 @@ const studentSchema = mongoose.Schema(
         sem:String,
         email:String,
         phone:String,
+        
 
     }
 )

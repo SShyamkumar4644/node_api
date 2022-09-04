@@ -1,11 +1,12 @@
-const express = require('express');// module which imports all the features of the express module.
-const student = require('./models/Student');
+const express = require("express");
+const app = express();
 
-const app = express(); // assigning this express module to app variable to carry on forward functions
+const cors = require('cors')
+app.use(cors())
 
-app.use(express.json()); // store the values in json format
+app.use(express.json());
 
-require('./connection');
+require("./connection");
 
 const Student = require('./models/Student');// import student schema
 
