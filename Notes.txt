@@ -55,6 +55,8 @@ app.get('/contacts', (req, res)=> {
 app.listen(3000, () =>{
     console.log('Server started on port 3000');
 })
+// This app starts a server and listens on port 3000 for connections. 
+The app responds with “Hello World!” for requests to the root URL (/) or route.
 
 Routing refers to determining how an application responds to a client request to a particular endpoint, 
 which is a URI (or path) and a specific HTTP request method (GET, POST, and so on).
