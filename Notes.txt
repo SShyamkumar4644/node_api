@@ -83,6 +83,9 @@ But here,if any changes done in between, you have stop the server and restart th
 and again, to overcome this, you need to install nodemon, by in terminal npm install nodemon
 
 Step 6:
+What is Nodemon in Express js?
+nodemon is a tool that helps develop Node. js based applications by automatically restarting the node application when file changes in the directory are detected.
+
 6. install nodemon by npm install nodemon, and in package.json file check whether the package is installed
  "author": "",
   "license": "ISC",
@@ -99,6 +102,11 @@ in scripts tag and then npm run start on terminal to execute.
 nodemon is for refreshed everytime you edit.
 
 Step 7:
+API:In other words, if you want to interact with a computer or system to retrieve information or perform a function, 
+an API helps you communicate what you want to that system so it can understand and fulfill 
+the request. 
+You can think of an API as a mediator between the users or clients and the resources or 
+web services they want to get.
 7. Install thunder client in vscode extensions, you will have new request option in blue color, click on that, new page for
 new request appears and in url dropdown select post and type your url
 http://localhost:3000/quotes and select body type 

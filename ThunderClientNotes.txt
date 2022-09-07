@@ -32,5 +32,6 @@ this try catch block in form.js file and will store
 data in mongodb. But when you make request from frontend to backend, we might get error called as 
 CORS, we use cors package in node-api use it.
 CORS POLICY ERROR, WHY?CAUSE REQUEST FROM REQUEST FROM SAME HOST NOT ALLOWED BY BROWSER POLICY SO
-
+when we are trying to communicate with same host with diffrent ports, according to browser policy its not allowed, we
+use a package called CORS in backend to overcome this policy.
 JS Promises
