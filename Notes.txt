@@ -1,3 +1,131 @@
+STEPS FOR CREATING REACT APP:
+1. For Front-end, intall react app, by using using the command in the terminal npx create-react-app myapp
+where myapp is the name of the app given for the react app, you can give any name for it.
+2. After react app is intalled you must get happy hacking at the end, and to execute the 
+react app, type npm run start in the terminal, make sure you are inside the folder 
+of the react app created in the terminal that is by cd myapp and hit enter and type
+npm run start, and your app will be running and you will get the output and 
+In the browser you will get react logo spinning as the output.
+3. You can experiment with the react app by playing with css and all.
+4. Make sure to install extensions such as prettier which is for formatting the documents
+5. Install (ES7+ React/Redux/React-Native snippets) for react snippets.
+
+Next we will create react-router-dom:
+1. For that create four files About.js, Contact.js, Home.js, NavBar.js, Skills.js, Teams.js
+2. In About.js, Contact.js, Home.js, Skills.js, Teams.js. In type rfce inside these files and hit enter and you will get readymade template
+of these codes for the respective files.
+
+The Files should be like this as below:
+About.js:
+import React from 'react'
+
+function About() {
+  return (
+    <div>About</div>
+  )
+}
+
+export default About
+
+Contact.js:
+import React from 'react'
+
+function Contact() {
+  return (
+    <div>Contact</div>
+  )
+}
+
+export default Contact
+
+Home.js:
+import React from 'react'
+
+function Home() {
+  return (
+    <div>Home</div>
+  )
+}
+
+export default Home
+
+Teams.js:
+import React from 'react'
+
+function Teams() {
+  return (
+    <div>
+        Teams
+    </div>
+  )
+}
+
+export default Teams
+
+Skills.js:
+import React from 'react'
+
+function skills() {
+  return (
+    <div>skills</div>
+  )
+}
+
+export default skills
+
+NavBar.js:
+//rfce
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './navbar.css'
+
+function NavBar() {
+  return (
+    <div>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+    </div>
+  )
+}
+
+export default NavBar
+
+App.js:
+import logo from './logo.svg';
+import './App.css';
+import React, {useState} from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './NavBar';
+import About from './About';
+import Contact from './Contact';
+import Teams from './Teams';
+import Skills from './skills';
+
+function App() {
+  
+  return (
+    <div className="App">
+      <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/about" element={<About/>} />
+        <Route path="/contact" element={<Contact/>} /> 
+      </Routes>
+      </BrowserRouter>
+    </div> 
+  );
+}
+
+export default App;
+
+//After typing all these codes in thier respective files also install react-router-dom in the terminal by
+//npm install react-router-dom.
+//After installing this package execute the react app by typing the npm run start in the terminal
+//Output you will get as 5 links as Home About Contact and you can navigate between 
+//these pages
+
+
 STEPS FOR CREATING NODE-API:
 Step 1:
 1. Create a node-api folder or anything and write npm init in terminal to initialise
@@ -342,51 +470,308 @@ New request and http://localhost:3000/student/63007e2bbb873b4906560f74 choose de
 } and check in mongodb atlas website and refresh it if deleted
 
 Frontend:
-1. Create form and studentslists.js file, rfce add them in navbar links
-<Link to="/list">All students</Link>
-<Link to="/create">Add new student</Link>
+1. Create form.js and studentslists.js file, rfce add them in navbar links
+//Form.js
+import React, { useState } from "react";
+import axios from "axios";// In ReactJS, Axios is a library that serves to create HTTP requests that are 
+// present externally. It is evident from the fact that we may sometimes in React applications need to get data from the external source. 
 
-now add style in navbar.css 
-.navbar{
-    float:right;
-}
+function Form() {
+  const [name, setName] = useState("");
+  const [usn, setUsn] = useState("");
+  const [branch, setBranch] = useState("");
+  const [email, setEmail] = useState("");
+  const [sem, setSem] = useState("");
+  const [phone, setPhone] = useState("");
+// creating all the variables and function names to store thier data individually
 
-a{
-    margin-right:10px;
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();// prevents in refreshing the page while filling the form
 
-and also in app.js 
-remove other links and paste these two
-<Route path="/" element={<Form />} />
-<Route path="/list" element={<StudentsList/>} />
-
-Copy paste style.css and form.js codes sent you and paste and run
-add import also
-
-const [name, setName] =useState("");
-  const [usn, setUsn] =useState("");
-  const [branch, setBranch] =useState("");
-  const [email, setEmail] =useState("");
-  const [sem, setSem] =useState("");
-  const [phone, setPhone] =useState("");
-
-  const handleSubmit = (e)=>{
-    e.preventDefault();
-  
-  const data={
-    name:name,
-    usn:usn,
-    branch:branch,
-    email:email,
-    sem:sem,
-    phone:phone,
+    const data = {
+      name: name,
+      usn: usn,
+      branch: branch,
+      email: email,
+      sem: sem,
+      phone: phone,
+    }; // creating the object to store these data
+    try {
+      const response = await axios.post("http://localhost:3000/student", data);
+      console.log(response);
+      alert("Created");
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
-  console.log(data);
-};
 
-in form.js file
+  return (
+    <div>
+      <h2>Add new Student</h2>
+      <form onSubmit={handleSubmit}> 
+        <div className="form-control">
+          <label>Student Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            
+          /> 
+        </div> 
+        <div className="form-control">
+          <label>Student USN</label>
+          <input
+            type="text"
+            value={usn}
+            onChange={(e) => setUsn(e.target.value)}
+            
+          />
+        </div>
+        <div className="form-control">
+          <label>Branch</label>
+          <input
+            type="text"
+            value={branch}
+            onChange={(e) => setBranch(e.target.value)}
+          />
+        </div>
+        <div className="form-control">
+          <label>Email</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-control">
+          <label>Sem</label>
+          <input
+            type="text"
+            value={sem}
+            onChange={(e) => setSem(e.target.value)}
+          />
+        </div>
+        <div className="form-control">
+          <label>Phone number</label>
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <button className="submit-btn" type="submit">
+          Submit
+        </button> 
+      </form>
+    </div>
+  );
+}
 
-give inputs in form click submit and console inspect element you will get data displayed in console when 
-you submit
+export default Form;
 
-npm install axios
+//StudentList.js
+import React, { useEffect, useState } from "react";
+import axios from "axios"; // In ReactJS, Axios is a library that serves to create HTTP requests that are 
+// present externally. It is evident from the fact that we may sometimes in React applications need to get data from the external source. 
+
+function StudentsList() {
+  const [students, setStudents] = useState([]);
+  
+
+  useEffect(() => {
+    fetchData(); 
+  });
+
+  async function fetchData() {
+    try {
+      const response = await axios.get("http://localhost:3000/student");
+      setStudents(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  const deletedata = (id) => {
+    axios.delete(`http://localhost:3000/student/${id}`, deletedata)
+  };
+
+
+  return (
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Branch</th>
+            <th>Sem</th>
+            <th>USN</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((student) => {
+            return (
+              <tr key={student._id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.branch}</td>
+                <td>{student.sem}</td>
+                <td>{student.usn}</td>
+                <td>{student.phone}</td>
+                {/* <button className="edit-btn" onClick={() =>{updatedata(student._id)}}>Edit</button> */}
+                <button className="delete-btn" onClick={() =>{deletedata(student._id)}}>Delete</button>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default StudentsList;
+
+//NavBar.js
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './Style.css'
+
+function NavBar() {
+  return (
+    <div>
+        <Link to="/list">All students</Link>
+        <Link to="/">Add new student</Link>
+    </div>
+  )
+}
+
+export default NavBar;
+
+//App.js 
+import logo from './logo.svg';
+import './App.css';
+import React, {useState} from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './NavBar';
+import About from './About';
+import Contact from './Contact';
+import Form from './Form';
+import StudentLists from './StudentLists';
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Form />} />
+        <Route path="/list" element={<StudentLists/>} />
+      </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
+
+//In node-api folder
+//index.js
+const express = require('express');// module which imports all the features of the express module.
+
+const app = express(); // assigning this express module to app variable to carry on forward functions
+
+const cors = require('cors')
+app.use(cors())
+
+app.use(express.json()); // store the values in json format
+
+require('./connection');
+
+const Student = require('./models/Student');// import student schema 
+
+app.post("/student", async (req, res) =>{
+    try{
+        const student = new Student(req.body);
+        const createStudent= await student.save();
+        res.status(201).send(createStudent); // this will save mongodb atlas, status successful
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+}) 
+
+app.get("/student", async (req, res) =>{
+    try{
+        const students= await Student.find();
+        res.send(students); // this will save mongodb atlas, status successful
+    } catch(e){
+        res.status(400).send(e); // here you might get error
+    }
+    
+})
+//display
+app.get("/student/:id", async (req, res) =>{
+    try{
+        const _id=req.params.id;
+        const student = await Student.findById(_id);
+        if(!student){
+            return res.status(404).send();
+        }
+        else{
+            res.send(student);
+        }
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
+
+//update
+app.put("/student/:id", async (req, res) =>{
+    try{
+        const _id =req.params.id;
+        const student = await Student.findByIdAndUpdate(_id, req.body, {
+            new:true,
+        });
+        res.send(student);
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
+
+//delete
+app.delete("/student/:id", async (req, res) =>{
+    try{
+        const _id =req.params.id;
+        const student = await Student.findByIdAndDelete(_id);
+        if(!student){
+            return res.status(404).send();
+        }
+        else{
+            res.send(student);
+        }
+    } catch(e){
+        console.log(e);
+        res.status(400).send(e); // here you might get error
+    }
+    
+})// get all student data whatever that is stored in database
+
+
+app.listen(3000, () =>{
+    console.log('Server started on port 3000');
+})
+
+//Packages to install:
+1. npm install cors
+2. npm install axios ( install this package in both frontend and backend, i.e 
+myapp and node-api)
+
